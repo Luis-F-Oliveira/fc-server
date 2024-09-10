@@ -29,14 +29,12 @@
           entre em contato: {{ config('mail.from.address') }}.
         </p>
         <ul style="list-style: none; padding: 0; text-align: center;">
-          @foreach ($groupedData as $items)
-          @foreach ($items as $data)
+          @foreach ($groupedData as $data)
           <li style="margin-bottom: 0.8rem;">
             <a href="{{ $data['url'] }}" target="_blank" style="text-decoration: none; color: #1e293b;">
               <h1 style="font-size: 1.1rem; margin: 0;">{{ $data['order'] }}</h1>
             </a>
           </li>
-          @endforeach
           @endforeach
         </ul>
         <p>

@@ -61,7 +61,7 @@ class NotifyController extends Controller
       $apiUrl = $this->generatePermissionUrl($email);
 
       if ($servant->active) {
-        Mail::to($email)->send(new SendCollectedData($groupedData, $servant, $apiUrl));
+        Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl));
         continue;
       }
     }

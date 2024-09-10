@@ -38,12 +38,12 @@ class SendCollectedData extends Mailable
      */
     public function content(): Content
     {
-        // \Log::info('Grouped data: ' . json_encode($this->collectedData));
+        $uniqueData = collect($this->collectedData)->unique('order')->toArray();
 
         return new Content(
             view: 'emails.data',
             with: [
-                'groupedData' => $this->collectedData,
+                'groupedData' => $uniqueData,
                 'servant' => $this->servant,
                 'apiUrl' => $this->api
             ]
