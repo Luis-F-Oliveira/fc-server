@@ -32,9 +32,11 @@ Responsável por armazenar dados coletados diretamente do diário oficial, essa 
 Dados salvos incluem `portaria`, `url` e `chave estrangeira da tabela servants` 
 
 ```php
+$table->id();
 $table->string('order', 255);
 $table->string('url', 255);
 $table->foreignId('servant_id')->constrained('servants');
+$table->timestamps();
 ```
 
 ### [Handle Notifications](https://github.com/Luis-F-Oliveira/fc-server/blob/main/database/migrations/2024_09_09_183548_create_handle_notifications_table.php)
@@ -46,6 +48,8 @@ Os dados armazenados incluem o `e-mail`, utilizado para buscar o token, e o pró
 O `token` é uma string aleatória de 32 caracteres alfanuméricos, contendo letras e números.
 
 ```php
+$table->id();
 $table->string('email');
 $table->string('token');
+$table->timestamps();
 ```
