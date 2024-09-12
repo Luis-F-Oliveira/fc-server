@@ -1,9 +1,4 @@
 # Tabelas
 
 > [!NOTE]
-
-> Dicionário
-
-> string = varchar
-
-> foreignId = foreign key
+> Dicionário: string = varchar, foreignId = foreign_key
