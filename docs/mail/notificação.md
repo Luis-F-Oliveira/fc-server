@@ -260,9 +260,9 @@ Para permitir a desativação pelo e-mail, é gerado um link especial que realiz
 
 O corpo da URL personalizada inclui alguns dados importantes a serem analisados: `app.url`, `token` e `email`.
 
-O valor de app.url é obtido a partir do arquivo de configuração [`app.php`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/config/app.php). Este arquivo contém várias configurações para a aplicação, e a URL base é definida na chave `'url' => env('APP_URL', 'http://localhost')`. Isso significa que o valor é buscado na variável de ambiente `APP_URL`. Caso essa variável não esteja definida, a configuração padrão retornada é `'http://localhost'`.
+O valor de `app.url` é obtido a partir do arquivo de configuração [`app.php`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/config/app.php). Este arquivo contém várias configurações para a aplicação, e a URL base é definida na chave `'url' => env('APP_URL', 'http://localhost')`. Isso significa que o valor é buscado na variável de ambiente `APP_URL`. Caso essa variável não esteja definida, a configuração padrão retornada é `'http://localhost'`.
 
-O `token` tem um sistema mais complexo, que começa com a definição de uma interface [`TokenGenerator`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/app/Contracts/TokenGenerator.php). Esta interface especifica a criação de um método público chamado `generateToken()`. A principal responsabilidade deste método é retornar uma string, que será o token gerado. A interface serve como um contrato para qualquer classe que a implemente, garantindo que o método `generateToken()` esteja disponível e produza uma string, independentemente da implementação específica.
+O `token` tem um sistema mais complexo, que começa com a definição de uma interface [`TokenGenerator`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/app/Contracts/TokenGenerator.php). Esta interface especifica a criação de um método público chamado `generateToken()`. A principal responsabilidade deste método é retornar uma string, que será o `token` gerado. A interface serve como um contrato para qualquer classe que a implemente, garantindo que o método `generateToken()` esteja disponível e produza uma string, independentemente da implementação específica.
 
 ```php
 <?php
@@ -277,7 +277,7 @@ interface TokenGenerator
 
 Depois disso, criamos um serviço chamado [`RandomTokenGenerator`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/app/Services/RandomTokenGenerator.php) que implementa a interface `TokenGenerator`. Este serviço fornece a implementação concreta do método `generateToken()` definido na interface.
 
-O serviço `RandomTokenGenerator` é responsável por gerar um token aleatório de 32 caracteres alfanuméricos. Para isso, ele utiliza a classe `Str` do Laravel, que facilita a criação de strings aleatórias. Essa abordagem assegura que o token gerado seja único e seguro para suas necessidades.
+O serviço `RandomTokenGenerator` é responsável por gerar um `token` aleatório de 32 caracteres alfanuméricos. Para isso, ele utiliza a classe `Str` do Laravel, que facilita a criação de strings aleatórias. Essa abordagem assegura que o `token` gerado seja único e seguro para suas necessidades.
 
 ```php
 <?php
@@ -373,9 +373,9 @@ class NotifyController extends Controller
 }
 ```
 
-Com a criação da URL que permite ao destinatário do e-mail desativar os envios recorrentes concluída, o próximo passo é abordar o recebimento da requisição e o gerenciamento do token.
+Com a criação da URL que permite ao destinatário do e-mail desativar os envios recorrentes concluída, o próximo passo é abordar o recebimento da requisição e o gerenciamento do `token`.
 
-Vamos explorar como o sistema processa a requisição quando o destinatário clica no link de desativação, e como o token é validado e utilizado para atualizar o status das notificações. Essa etapa envolve verificar o token, garantir sua validade e, com base nisso, modificar as configurações de envio de notificações para o endereço de e-mail correspondente.
+Vamos explorar como o sistema processa a requisição quando o destinatário clica no link de desativação, e como o `token` é validado e utilizado para atualizar o status das notificações. Essa etapa envolve verificar o `token`, garantir sua validade e, com base nisso, modificar as configurações de envio de notificações para o endereço de e-mail correspondente.
 
 Vamos começar examinando a rota definida no diretório [routes](https://github.com/Luis-F-Oliveira/fc-server/tree/main/routes), especificamente no arquivo [`web.php`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/routes/web.php), que é responsável pelo roteamento interno da aplicação.
 
@@ -424,5 +424,8 @@ class DesactivateNotification extends Controller
 }
 ```
 
-No controller, observamos que dois parâmetros são requisitados: o `$request`, que é uma instância da classe `Request` do Laravel, e o `$token`, que é obtido diretamente da rota. O `$request` é utilizado para coletar o e-mail que foi enviado como parâmetro na `URL (...?email=$email)`, enquanto o `$token` é extraído da rota para validação e processamento.
+No controller, observamos que dois parâmetros são requisitados: o `$request`, que é uma instância da classe `Request` do Laravel, e o `$token`, que é obtido diretamente da rota. O `$request` é utilizado para coletar o `$email` que foi enviado como parâmetro na `URL (...?email=$email)`, enquanto o `$token` é extraído da rota para validação e processamento.
 
+Após obter os dois valores, realiza-se uma busca no banco de dados para verificar a existência do `token`. Caso ele seja encontrado, o token é excluído e as notificações do destinatário são desativadas. Por fim, é enviado um e-mail confirmando o sucesso da operação, conforme mostrado abaixo.
+
+![E-mail de successo de operação](./img/desativação.png)
