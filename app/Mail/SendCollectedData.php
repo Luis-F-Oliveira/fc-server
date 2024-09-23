@@ -28,8 +28,9 @@ class SendCollectedData extends Mailable
      */
     public function envelope(): Envelope
     {
+        $currentDate = now()->format('d/m/Y');
         return new Envelope(
-            subject: 'Notificação Facilita Diário',
+            subject: 'Notificação Facilita Diário - ' . $currentDate,
         );
     }
 
