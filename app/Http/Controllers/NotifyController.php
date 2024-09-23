@@ -19,7 +19,7 @@ class NotifyController extends Controller
     $this->tokenGenerator = $tokenGenerator;
   }
 
-  private function generatePermissionUrl(string $email): string
+  private function generate_permission_url(string $email): string
   {
     $existingRecord = HandleNotifications::where('email', $email)->first();
 
@@ -38,7 +38,35 @@ class NotifyController extends Controller
     return config('app.url') . "/disable_notification/$token?email=$email";
   }
 
-  public function sendEmail(Request $request)
+  public function send_email_by_date(Request $request)
+  {
+    $date = $request->only('date');
+    $data = Data::whereDate('created_at', $date)->get();
+
+    $groupedData = [];
+    foreach ($data as $item) {
+      $servantId = $item->servant_id;
+      if (!isset($groupedData[$servantId])) {
+        $groupedData[$servantId] = [];
+      }
+      $groupedData[$servantId][] = $item;
+    }
+
+    foreach ($groupedData as $servantId => $items) {
+      $servant = $items[0]->servant;
+      $email = $servant->email;
+      $apiUrl = $this->generate_permission_url($email);
+
+      if ($servant->active) {
+        Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl));
+        continue;
+      }
+    }
+
+    return response()->json(['message' => 'E-mails enviados com sucesso'], 200);
+  }
+
+  public function send_email_by_ids(Request $request)
   {
     $data = Data::with('servant')->find($request);
 
@@ -58,7 +86,7 @@ class NotifyController extends Controller
     foreach ($groupedData as $servantId => $items) {
       $servant = $items[0]->servant;
       $email = $servant->email;
-      $apiUrl = $this->generatePermissionUrl($email);
+      $apiUrl = $this->generate_permission_url($email);
 
       if ($servant->active) {
         Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl));
@@ -67,5 +95,12 @@ class NotifyController extends Controller
     }
 
     return response()->json(['message' => 'E-mails enviados com sucesso'], 200);
+  }
+
+  public function showDate() 
+  {
+    return Data::selectRaw('DATE(created_at) as date')
+      ->groupBy('date')
+      ->get();
   }
 }
