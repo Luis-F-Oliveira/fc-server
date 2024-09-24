@@ -156,7 +156,7 @@ As funcionalidades do sistema incluem o armazenamento dos dados obtidos da IOMAT
     - `memcached` para comunicação com Memcached.
     - `openssl`, `mbstring`, `tokenizer`, `json`, `xml`, `ctype`, `bcmath`, entre outras extensões Laravel requeridas.
 
-- Banco de dados: MySQL, MariaDB, ou PostgreSQL, dependendo da escolha para o backend.
+- Banco de dados: `MySQL`, `MariaDB`, ou `PostgreSQL`.
     - Memória: Recomenda-se alocar no mínimo 2 GB para o banco de dados em ambientes de desenvolvimento. Produção pode exigir mais, dependendo da carga de dados.
 
 ### Outros
