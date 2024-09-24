@@ -20,7 +20,8 @@ class SendCollectedData extends Mailable
     public function __construct(
         protected array $collectedData,
         protected Servants $servant,
-        protected string $api
+        protected string $api,
+        protected string $date
     ) {}
 
     /**
@@ -28,9 +29,8 @@ class SendCollectedData extends Mailable
      */
     public function envelope(): Envelope
     {
-        $currentDate = now()->format('d/m/Y');
         return new Envelope(
-            subject: 'Notificação Facilita Diário - ' . $currentDate,
+            subject: 'Notificação Facilita Diário - ' . $this->date,
         );
     }
 

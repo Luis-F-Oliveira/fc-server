@@ -8,6 +8,7 @@ use App\Models\HandleNotifications;
 use App\Mail\SendCollectedData;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class NotifyController extends Controller
@@ -55,10 +56,11 @@ class NotifyController extends Controller
     foreach ($groupedData as $servantId => $items) {
       $servant = $items[0]->servant;
       $email = $servant->email;
+      $date = $servant->created_at->format('d/m/Y');
       $apiUrl = $this->generate_permission_url($email);
 
       if ($servant->active) {
-        Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl));
+        Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl, $date));
         continue;
       }
     }
@@ -86,10 +88,11 @@ class NotifyController extends Controller
     foreach ($groupedData as $servantId => $items) {
       $servant = $items[0]->servant;
       $email = $servant->email;
+      $date = $servant->created_at->format('d/m/Y');
       $apiUrl = $this->generate_permission_url($email);
 
       if ($servant->active) {
-        Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl));
+        Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl, $date));
         continue;
       }
     }
@@ -97,7 +100,7 @@ class NotifyController extends Controller
     return response()->json(['message' => 'E-mails enviados com sucesso'], 200);
   }
 
-  public function showDate() 
+  public function show_date() 
   {
     return Data::selectRaw('DATE(created_at) as date')
       ->groupBy('date')
