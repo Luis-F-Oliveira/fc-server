@@ -20,7 +20,7 @@
     - [Memcached](#memcached)
     - [Laravel](#laravel)
     - [Resumo dos Requisitos de Hardware (Produção)](#resumo-dos-requisitos-de-hardware-produção)
-3. [Instalação e Configuração](#instalação-e-configuração)
+3. [Instalação e Configuração de Ambiente de Produção](#instalação-e-configuração-de-ambiente-de-produção)
 <!-- 4. Arquitetura do Sistema
 5. Funcionalidades
 6. Guia do Usuário
@@ -177,5 +177,103 @@ As funcionalidades do sistema incluem o armazenamento dos dados obtidos da IOMAT
 
 - Sistema Operacional: Linux (Ubuntu 20.04 LTS ou similar).
 
-## Instalação e Configuração
+## Instalação e Configuração de Ambiente de Produção
 
+### 1. Clonando o Projeto
+
+```bash
+git clone https://github.com/Luis-F-Oliveira/fc-server.git
+cd fc-server
+```
+
+### 2. Instalação Vendor
+
+```bash
+chmod +x start.sh
+sh start.sh
+```
+
+### 3. Configurando Variáveis de Ambiente
+
+1. Copie o exemplo `.env`:
+```bash
+cp .env.example .env
+```
+
+2. Modifique as variáveis de ambiente, especialmente:
+- Banco de Dados
+```bash
+DB_CONNECTION=
+DB_HOST=
+DB_PORT=
+DB_DATABASE=
+DB_USERNAME=
+DB_PASSWORD=
+```
+
+- Redis
+```bash
+REDIS_CLIENT=phpredis
+REDIS_HOST=redis
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+```
+
+- Memcached
+```bash
+MEMCACHED_HOST=memcached
+MEMCACHED_PORT=11211
+```
+
+3. Construindo e Inicializando os Containers
+
+Agora com o `.env` configurado e projeto preparado, vamos construir e iniciar os containers Docker.
+
+No diretório raiz do projeto, execute:
+```bash
+docker-compose build
+docker-compose up -d
+```
+
+4. Gerar `APP_KEY`:
+```bash
+docker-compose exec laravel.prod php artisan key:generate
+```
+
+5. Rodando as Migrações
+
+Após inicializar os containers, você precisa rodar as migrações para configurar o banco de dados.
+
+```bash
+docker-compose exec laravel.prod php artisan migrate
+```
+
+6. Configuração dos Containers
+
+O arquivo [`docker-compose.yml`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/docker-compose.yml) está configurado para rodar os seguintes serviços:
+
+- Laravel Service (laravel.prod): 
+
+    - Imagem Base: `sail-8.3/app`, construída a partir do [`Dockerfile`](https://github.com/Luis-F-Oliveira/fc-server/blob/main/docker/8.3/Dockerfile) no diretório [`docker/8.3`](https://github.com/Luis-F-Oliveira/fc-server/tree/main/docker/8.3).
+
+    - Volumes: Monta o diretório do projeto localmente em `/var/www/html`.
+
+    - Portas: 80 para a aplicação Laravel, e 5173 para o Vite (caso esteja usando).
+
+    - Depende: De `redis` e `memcached`.
+
+- Redis Service (redis):
+
+    - Imagem Base: `redis:alpine`.
+
+    - Volumens: Dados persistentes armazenados em `sail-redis`.
+    
+    - Porta: 6379 (configurável pelo `.env`).
+
+    - Healthcheck: Verifica a saúde do Redis com `redis-cli ping`.
+
+- Memcached Service (memcached):
+
+    - Imagem Base: `memcached:alpine`.
+
+    - Porta: 11211 (configurável pelo `.env`).
