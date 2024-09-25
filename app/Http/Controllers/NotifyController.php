@@ -56,7 +56,7 @@ class NotifyController extends Controller
     foreach ($groupedData as $servantId => $items) {
       $servant = $items[0]->servant;
       $email = $servant->email;
-      $date = $servant->created_at->format('d/m/Y');
+      $date = $items[0]->created_at;
       $apiUrl = $this->generate_permission_url($email);
 
       if ($servant->active) {
@@ -88,7 +88,7 @@ class NotifyController extends Controller
     foreach ($groupedData as $servantId => $items) {
       $servant = $items[0]->servant;
       $email = $servant->email;
-      $date = $servant->created_at->format('d/m/Y');
+      $date = $items[0]->created_at;
       $apiUrl = $this->generate_permission_url($email);
 
       if ($servant->active) {
