@@ -1,4 +1,4 @@
-# Facilta Diário
+# Facilita Diário
 
 1. [Visão Geral do Sistema](#visão-geral-do-sistema)
     - [Descrição do Projeto](#descrição-do-projeto)
@@ -21,14 +21,8 @@
     - [Laravel](#laravel)
     - [Resumo dos Requisitos de Hardware (Produção)](#resumo-dos-requisitos-de-hardware-produção)
 3. [Instalação e Configuração de Ambiente de Produção](#instalação-e-configuração-de-ambiente-de-produção)
-<!-- 4. Arquitetura do Sistema
-5. Funcionalidades
-6. Guia do Usuário
-7. Guia para Desenvolvedores
-8. Segurança
-9. Manutenção e Monitoramento
-10. FAQ e Solução de Problemas
-11. Anexos e Referências -->
+4. [Arquitetura do Sistema](https://github.com/Luis-F-Oliveira/fc-server/tree/main/docs)
+5. [Funcionalidades](#funcionalidades)
 
 ## Visão Geral do Sistema
 
@@ -277,3 +271,11 @@ O arquivo [`docker-compose.yml`](https://github.com/Luis-F-Oliveira/fc-server/bl
     - Imagem Base: `memcached:alpine`.
 
     - Porta: 11211 (configurável pelo `.env`).
+
+## Funcionalidades
+
+- **Operações CRUD (Criar, Ler, Atualizar e Excluir):** Implementação completa das funcionalidades de manipulação de dados, abrangendo a criação, leitura, atualização e exclusão de registros, incluindo informações coletadas e servidores armazenados no sistema.
+
+- **Envio de Notificações Personalizadas:** Sistema automatizado para envio de e-mails personalizados aos destinatários, contendo informações processadas de acordo com os dados relevantes.
+
+- **Desativação de Notificações:** Inclusão de links dedicados nos e-mails de notificação, permitindo que os destinatários desativem permanentemente o recebimento de futuras notificações, até que optem por reativá-las.
