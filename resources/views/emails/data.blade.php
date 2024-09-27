@@ -56,7 +56,7 @@
             Para deixar de receber e-mail de notificação, clique no botão abaixo.
           </p>
           <a href="{{ $apiUrl }}" style="text-decoration: none; cursor: pointer;">
-            <button style="width: 180px; height: 35px; background-color: #1e293b; border-radius: 0.5rem; border: 0; color: #ffffff; font-size: 0.8rem; transition: 1s; display: inline-block;">
+            <button style="width: 180px; height: 35px; background-color: #b91c1c; border-radius: 0.5rem; border: 0; color: #0c0a09; font-size: 0.8rem; transition: 1s; display: inline-block;">
               Desabilitar Notificações
             </button>
           </a>

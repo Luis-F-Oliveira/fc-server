@@ -6,6 +6,7 @@ use App\Contracts\TokenGenerator;
 use App\Models\Data;
 use App\Models\HandleNotifications;
 use App\Mail\SendCollectedData;
+use App\Models\Report;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -59,6 +60,11 @@ class NotifyController extends Controller
       $date = $items[0]->created_at;
       $apiUrl = $this->generate_permission_url($email);
 
+      Report::create([
+        'data_id' => $items[0]->id,
+        'servant_id' => $servant->id
+      ]);
+
       if ($servant->active) {
         Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl, $date));
         continue;
@@ -90,6 +96,11 @@ class NotifyController extends Controller
       $email = $servant->email;
       $date = $items[0]->created_at;
       $apiUrl = $this->generate_permission_url($email);
+
+      Report::create([
+        'data_id' => $items[0]->id,
+        'servant_id' => $servant->id
+      ]);
 
       if ($servant->active) {
         Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl, $date));
