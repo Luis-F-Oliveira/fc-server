@@ -17,40 +17,6 @@
     </tr>
     <tr>
       <td style="padding: 1rem; background-color: #ffffff; border-radius: 0.5rem; margin: auto;">
-        <p>
-          Prezado(a),
-          <span style="background-color: #dcfce7; padding: 0 2px;">
-            {{ $servant['name'] }}
-          </span>
-        </p>
-        <p>
-          Essa mensagem foi produzida pelo serviço <strong>"FACILITA DIÁRIO"</strong> da
-          <strong>DIRETORIA DE GESTÃO DE PESSOAS.</strong> Para mais informações sobre o serviço,
-          entre em contato: {{ config('mail.from.address') }}.
-        </p>
-        <ul style="list-style: none; padding: 0; text-align: center;">
-          @foreach ($groupedData as $data)
-          <li style="margin-bottom: 0.8rem;">
-            <a href="{{ $data['url'] }}" target="_blank" style="text-decoration: none; color: #1e293b;">
-              <h1 style="font-size: 1.1rem; margin: 0;">{{ $data['order'] }}</h1>
-            </a>
-          </li>
-          @endforeach
-        </ul>
-        <p>
-          Este serviço é um projeto experimental da Diretoria de Gestão de Pessoas com objetivo de facilitar o
-          acompanhamento de publicações da Defensoria Pública pelos seus servidores, não substituindo, de qualquer forma,
-          a obrigação de leitura do Diário Oficial diretamente dos sistemas do IOMAT.
-        </p>
-        <p>
-          Destacamos que o acompanhamento somente compreende as publicações da Defensoria Pública do Estado de Mato
-          Grosso.
-        </p>
-        <p>
-          Saudações, <br>
-          {{ env('APP_NAME') }}
-        </p>
-        <hr style="border: 1px solid #e2e8f0; margin: 0.8rem 0;">
         <div style="text-align: center; margin-bottom: 1.5rem;">
           <p style="margin-bottom: 10px;">
             Para deixar de receber e-mail de notificação, clique no botão abaixo.
