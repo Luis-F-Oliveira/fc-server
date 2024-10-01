@@ -30,12 +30,12 @@ class NotifyController extends Controller
       $date = $items[0]->created_at;
       $apiUrl = config('app.url') . "/confirmation_notification?email=$email";
 
-      Report::create([
-        'data_id' => $items[0]->id,
-        'servant_id' => $servant->id
-      ]);
-
       if ($servant->active) {
+        Report::create([
+          'data_id' => $items[0]->id,
+          'servant_id' => $servant->id
+        ]);
+
         Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl, $date));
         continue;
       }
@@ -67,12 +67,12 @@ class NotifyController extends Controller
       $date = $items[0]->created_at;
       $apiUrl = config('app.url') . "/confirmation_notification?email=$email";
 
-      Report::create([
-        'data_id' => $items[0]->id,
-        'servant_id' => $servant->id
-      ]);
-
       if ($servant->active) {
+        Report::create([
+          'data_id' => $items[0]->id,
+          'servant_id' => $servant->id
+        ]);
+
         Mail::to($email)->send(new SendCollectedData($items, $servant, $apiUrl, $date));
         continue;
       }
