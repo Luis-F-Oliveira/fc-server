@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\ConfirmationController;
-use App\Http\Controllers\DesactivateNotification;
+use App\Http\Controllers\Email\ConfirmationController;
+use App\Http\Controllers\Email\DesactivateNotification;
 use Illuminate\Support\Facades\Route;
 
 Route::get('confirmation_notification', [ConfirmationController::class, 'index']);

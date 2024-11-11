@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Email;
 
+use App\Http\Controllers\Controller;
 use App\Models\Data;
 use App\Mail\SendCollectedData;
 use App\Models\Report;

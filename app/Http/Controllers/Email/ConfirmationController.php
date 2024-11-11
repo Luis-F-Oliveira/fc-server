@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Email;
 
 use App\Contracts\TokenGenerator;
+use App\Http\Controllers\Controller;
 use App\Mail\Confirmation;
 use App\Models\HandleNotifications;
 use Illuminate\Http\Request;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\Mail;
 
 class ConfirmationController extends Controller
 {
-protected $tokenGenerator;
+  protected $tokenGenerator;
 
   public function __construct(TokenGenerator $tokenGenerator)
   {

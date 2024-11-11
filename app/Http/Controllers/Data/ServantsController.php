@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Data;
 
+use App\Http\Controllers\Controller;
 use App\Models\Servants;
 use App\Http\Requests\ServantRequest;
 use App\Imports\ServantsImport;
