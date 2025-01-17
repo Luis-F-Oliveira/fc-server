@@ -20,7 +20,6 @@ class SendCollectedData extends Mailable
     public function __construct(
         protected array $collectedData,
         protected Servants $servant,
-        protected string $api,
         protected string $date
     ) {}
 
@@ -45,8 +44,7 @@ class SendCollectedData extends Mailable
             view: 'emails.data',
             with: [
                 'groupedData' => $uniqueData,
-                'servant' => $this->servant,
-                'apiUrl' => $this->api
+                'servant' => $this->servant
             ]
         );
     }

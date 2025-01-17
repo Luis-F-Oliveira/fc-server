@@ -4,78 +4,76 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Facilita Diário</title>
 </head>
 
-<body style="padding: 0px; margin: 0px; outline: 0px; box-sizing: border-box; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; background-color: #f1f5f9; width: 100%; height: 100%;">
-
-  <table align="center" width="100%" cellpadding="0" cellspacing="0" style="background-color: #f1f5f9; padding: 1rem;">
+<body style="margin:0; padding:0; background-color:#f8fafc; font-family:Arial, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0"
+    style="max-width:600px; margin:0 auto; background-color:#ffffff; border-radius:8px; overflow:hidden; box-shadow:0 4px 6px rgba(0,0,0,0.1);">
+    <!-- Header -->
     <tr>
-      <td style="text-align: center; font-weight: bold; font-size: 1.2rem; background-color: #f1f5f9; border-radius: 0.5rem; padding: 1rem; max-width: 33%; margin: auto; color: #64748b;">
-        {{ env('APP_NAME') }}
+      <td style="background-color:#097905; padding:30px 20px; text-align:center;">
+        <h1 style="color:#ffffff; margin:0; font-size:24px;">{{ env('APP_NAME') }}</h1>
       </td>
     </tr>
+
+    <!-- Content -->
     <tr>
-      <td style="padding: 1rem; background-color: #ffffff; border-radius: 0.5rem; margin: auto;">
-        <p>
+      <td style="padding:40px 30px;">
+        <!-- Greeting -->
+        <p style="margin:0 0 20px; color:#1e293b;">
           Prezado(a),
-          <span style="background-color: #dcfce7; padding: 0 2px;">
+          <span style="background-color:#dbeafe; padding:2px 6px; border-radius:4px; font-weight:bold;">
             {{ $servant['name'] }}
           </span>
         </p>
-        <p>
-          Essa mensagem foi produzida pelo serviço <strong>"FACILITA DIÁRIO"</strong> da
-          <strong>DIRETORIA DE GESTÃO DE PESSOAS.</strong> Para mais informações sobre o serviço,
-          entre em contato: {{ config('mail.from.address') }}.
-        </p>
-        <ul style="list-style: none; padding: 0; text-align: center;">
-          @foreach ($groupedData as $data)
-          <li style="margin-bottom: 0.8rem;">
-            <a href="{{ $data['url'] }}" target="_blank" style="text-decoration: none; color: #1e293b;">
-              <h1 style="font-size: 1.1rem; margin: 0;">{{ $data['order'] }}</h1>
-            </a>
-          </li>
-          @endforeach
-        </ul>
-        <p>
-          Este serviço é um projeto experimental da Diretoria de Gestão de Pessoas com objetivo de facilitar o
-          acompanhamento de publicações da Defensoria Pública pelos seus servidores, não substituindo, de qualquer forma,
-          a obrigação de leitura do Diário Oficial diretamente dos sistemas do IOMAT.
-        </p>
-        <p>
-          Destacamos que o acompanhamento somente compreende as publicações da Defensoria Pública do Estado de Mato
-          Grosso.
-        </p>
-        <p>
-          Saudações, <br>
-          {{ env('APP_NAME') }}
-        </p>
-        <hr style="border: 1px solid #e2e8f0; margin: 0.8rem 0;">
-        <div style="text-align: center; margin-bottom: 1.5rem;">
-          <p style="margin-bottom: 10px;">
-            Para deixar de receber e-mail de notificação, clique no botão abaixo.
-          </p>
-          <a href="{{ $apiUrl }}" style="text-decoration: none;">
-            <button style="width: 180px; height: 35px; cursor: pointer; background-color: #b91c1c; border-radius: 0.5rem; border: 0; color: #ffffff; font-size: 0.8rem; transition: 1s; display: inline-block;">
-              Desabilitar Notificações
-            </button>
-          </a>
-          <p>
-            Se você estiver com problemas para clicar no botão "Desabilitar Notificações", copie e cole o URL abaixo em seu
-            navegador da web: <a href="{{ $apiUrl }}" style="color: #1e293b;">
-              {{ $apiUrl }}
-            </a>
+
+        <!-- Service Info -->
+        <div style="background-color:#f1f5f9; padding:20px; border-radius:6px; margin-bottom:30px;">
+          <p style="margin:0; color:#475569; line-height:1.6;">
+            Esta mensagem foi produzida pelo serviço <strong>"FACILITA DIÁRIO"</strong> da
+            <strong>DIRETORIA DE GESTÃO DE PESSOAS</strong>.
           </p>
         </div>
+
+        <!-- Publications -->
+        <div style="margin:30px 0;">
+          @foreach ($groupedData as $data)
+          <div
+            style="border-left:4px solid #097905; padding:15px; margin-bottom:15px; background-color:#f8fafc; transition: all 0.3s ease;">
+            <a href="https://iomat.blucaju.com.br/redirect/{{ $data['id'] }}" target="_blank"
+              style="text-decoration:none; color:#1e293b; display:block; padding:5px 0;">
+              <h2 style="margin:0; font-size:16px; color:#097905;">{{ $data['order'] }}</h2>
+            </a>
+          </div>
+          @endforeach
+        </div>
+
+        <!-- Disclaimer -->
+        <div style="background-color:#fef2f2; padding:20px; border-radius:6px; margin:30px 0;">
+          <p style="margin:0; color:#991b1b; font-size:14px; line-height:1.6;">
+            Este serviço é um projeto experimental e não substitui a obrigação de leitura do Diário Oficial diretamente
+            dos sistemas do IOMAT.
+          </p>
+        </div>
+
+        <!-- Signature -->
+        <p style="color:#64748b; margin:30px 0 0;">
+          Saudações,<br>
+          <strong style="color:#1e293b;">{{ env('APP_NAME') }}</strong>
+        </p>
       </td>
     </tr>
+
+    <!-- Footer -->
     <tr>
-      <td style="text-align: center; color: #94a3b8; padding: 1rem;">
-        © 2024 {{ env('APP_NAME') }}. Todos os direitos reservados.
+      <td style="background-color:#f1f5f9; padding:20px; text-align:center;">
+        <p style="margin:0; color:#94a3b8; font-size:14px;">
+          © 2025 {{ env('APP_NAME') }}. Todos os direitos reservados.
+        </p>
       </td>
     </tr>
   </table>
-
 </body>
 
 </html>
