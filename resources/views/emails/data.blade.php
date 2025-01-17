@@ -41,7 +41,7 @@
           @foreach ($groupedData as $data)
           <div
             style="border-left:4px solid #097905; padding:15px; margin-bottom:15px; background-color:#f8fafc; transition: all 0.3s ease;">
-            <a href="https://iomat.blucaju.com.br/redirect/{{ $data['id'] }}" target="_blank"
+            <a href="{{ env('APP_URL') }}/redirect/{{ $data['id'] }}" target="_blank"
               style="text-decoration:none; color:#1e293b; display:block; padding:5px 0;">
               <h2 style="margin:0; font-size:16px; color:#097905;">{{ $data['order'] }}</h2>
             </a>
